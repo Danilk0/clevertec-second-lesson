@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+}
+
+ext {
+    jarName = "gradle"
+    jarVersion = "1.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.10'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+jar{
+    archivesBaseName = jarName
+    archiveVersion = jarVersion
+
+    from {
+        configurations.compileClasspath.filter{ it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    manifest {
+        attributes(
+                'Main-Class':'ru.clevertec.App'
+        )
+    }
+}
+
+
+test {
+    useJUnitPlatform()
+}
