@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+group 'ru.clevertec'
+
+dependencies {
+    implementation files("/home/daniil/clevertec/second_lesson/build/libs/utils-1.3.5.jar")
+}
+
+jar{
+    from {
+        configurations.compileClasspath.filter{ it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
